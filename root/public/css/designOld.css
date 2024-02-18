@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+body{
+    font-family: 'Roboto', sans-serif !important;
+}
+
+
+#nav{
+    height: 60px;
+    background-color: #333;
+    border-bottom: #000000 solid 1px;
+}
+
+#nav #logo{
+    margin-top: 10px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.btn{
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+
+.deconnexionBTN {
+    height: 100% !important;
+    border-radius: 0 !important;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+}
+.deconnexionIcon{
+    display: none;
+}
+.deconnexionIcon:hover{
+    text-decoration: none;
+}
+
+@media (max-width:576px){
+    .deconnexionBTN {
+       display: none;
+    
+    }
+    .deconnexionIcon{
+        display: inline-block;
+        height: 100%;
+        float: right;
+        align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-right: 10px;
+    color: white;
+    }
+}
+
+
+/*------------ communication ------------------*/
+
+.cardMessagerie{
+    max-height: 90vh;
+    border: #000000 solid 1px !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    border-radius: 0;
+}
+
+.cardbodyMessagerie{
+    max-height: 90vh;
+}
+
+.topMessage{
+    border-bottom: gray solid 1px;
+    background-color: #F5F5F5;
+    width: 100%;
+}
+
+
+.topMessageDate{
+    font-size: 11px;
+}
+
+.topMessageExped{
+    font-size: 18px;
+}
+
+.topMessageTitle{
+    font-size: 16px;
+}
+
+.topMessageRecev{
+    font-size: 13px;
+}
+
+
+.rowMessagerie{
+    height: 75vh;
+}
+
+.colListe{
+    overflow-y: auto;
+    max-height: 75vh;
+
+}
+
+.colMessage{
+    max-height: 75vh;
+
+}
+
+@media (min-width: 768px) {
+    .modal-xl {
+      width: 90%;
+     max-width:1200px;
+    }
+  }
+
+  @media (min-width: 576px){
+  .modal-dialog {
+       max-width: 1200px !important; 
+      margin: 30px auto;
+  }
+
+}
+
+.list-group:hover .list-group-item:hover{
+    background-color: 0 !important;
+}
+
+
+
+.nonLu{
+    border-left: #007bff solid 5px; 
+}
+
+.nonLu .topMessageTitle{
+    color: #007bff;
+}
+
+.nonLu .topMessageExped{
+    color: #000;
+    font-weight: bold;
+}
+
+
+.bodyMessage{
+    width: 100%;
+    position: relative;
+    top: 150px;
+}
+
+
+.colMessage{
+    border: gray solid 1px;
+}
+
+
+.topNavbarMessage{
+    color: #333;
+    border-radius: 15px;
+    background-color: white;
+    height: 40px ;
+    width: 40px;
+}
+
+.topNavbarMessageIcon{
+    margin-left: 8px;
+    margin-top: 4px;
+}
+
+.badgeMessage{
+      color: white;
+    background: red;
+    position: relative !important;
+    top: -18px !important;
+    left: -9px;
+    width: 19px;
+    text-align: center;
+    margin-left: 2px;
+}

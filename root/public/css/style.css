@@ -1,0 +1,746 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+/* AUTHENTIFICATION */
+#bodyAuth{
+    background-color: rgba(255, 203, 5, 1);
+    min-height: 100vh;
+}
+
+#logoAuth{
+    height: 150px;
+    display:block;
+    margin:auto;
+}
+
+#panelAuth{
+    border: gray solid 1px;
+    border-radius: 20px;
+    background-color: white;
+    margin-top: 20px;
+}
+
+/* ----------------------------------- */
+/* NAV */
+#nav{
+    height: 60px;
+    background-color: #333;
+    border-bottom: #000000 solid 1px;
+}
+
+#nav #logo{
+    margin-top: 10px;
+    height: 40px;
+    margin-left: 10px;
+}
+/*-------------------------------------*/
+/* BACKGROUND LIGNE PRODUCTION */
+#bodylignesP{
+    background-attachment: fixed;
+    background-image: url(../img/bgPalmary.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    min-height: 100vh;
+    height: 100%;
+
+}
+/*-------------------------------------*/
+
+/* BUTTON LIGNE PRODUCTION */
+#appSummary{
+    justify-content:center;
+    margin-top: 0px;
+    width: 800px;
+    clear: both;
+}
+
+@media (max-width:900px){
+    #appSummary{
+        width: 90%;
+    }
+}
+
+.btn{
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+/*Card header */
+.accordion .card-header{
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+
+}
+/* card title */
+.cardTitle{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* List group */
+.list-group:hover .list-group-item:hover {
+    background-color: #E0FFFF;
+}
+.list-group{
+    font-size: 25px;
+}
+.deconnexionBTN {
+    height: 100% !important;
+    border-radius: 0 !important;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+}
+.deconnexionIcon{
+    display: none;
+}
+.deconnexionIcon:hover{
+    text-decoration: none;
+}
+
+@media (max-width:400px){
+    .deconnexionBTN {
+       display: none;
+    
+    }
+    .deconnexionIcon{
+        display: inline-block;
+        height: 100%;
+        float: right;
+        align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-right: 10px;
+    color: white;
+    }
+}
+
+/* -----------------------------------*/
+
+/*----------------------------------------------------------SAISIE--------------------------------------- */
+
+/*HEADER SAISIE */
+#headerSaisie{
+    margin-top: 20px;
+}
+/* -----------------------------------*/
+/*body Saisie */
+#bodySaisie{
+    background-color:   #F0F0F0;
+    min-height: 100vh;
+    height: 100%;
+}
+/* BUTTON HISTORIQUE */
+#historiqueBTN{
+    margin-right: 80px;
+}
+@media (max-width:700px){
+    #historiqueBTN{
+        margin-right: 20px;
+    }
+
+}
+
+/* card */
+.card, .accordion .card:last-of-type {
+    border-radius: 15px;
+    margin-left: 80px;
+    margin-bottom: 0px;
+    margin-right: 80px;
+    margin-top: 50px;
+}
+
+@media (max-width:700px){
+    .card, .accordion .card:last-of-type{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+}
+
+.groupeNorme .groupeNorme {
+    display: inline-flex;
+    max-width: 290px !important;
+}
+
+/* label */
+.label, #fonction .label{
+    width: 150px !important;
+    font-size: 20px;
+}
+@media (max-width:700px){
+    .label{
+        width: 100px !important;
+        font-size: 18px;
+    }
+
+}
+
+/* input */
+
+
+.inputValue {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-top-left-radius: 15px !important;
+    border-bottom-left-radius: 15px !important;
+    -moz-appearance:textfield;
+}
+
+/* unité */
+.unit{
+         border-top-right-radius: 15px !important;
+         border-bottom-right-radius: 15px !important;
+}
+
+/* Alert */
+
+.alert {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-inline-start: 160px;
+}
+
+#errorLogin{
+    width: 100%;
+    padding: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: white;
+    background-color: tomato !important;
+}
+@media (max-width:700px){
+    .alert{
+        width: 100%;
+        margin-left: 100px;
+        padding: 0;
+        
+    }
+
+}
+
+/* Hirarchie User */
+
+@media (max-width:600px){
+    .hirarchieUser{
+        width: 100% !important;
+    }
+}
+
+/* Produit BTN Collapse */
+.ligneBTN{
+    font-size: 1.5rem !important;
+    text-decoration: none !important;
+    padding: 2;
+}
+.produitBTN:hover {
+    text-decoration: none;
+   }
+
+/* Modal historique */
+
+@media (min-width: 768px) {
+    .modal-dialog {
+      width: 600px;
+      margin: 30px auto;
+    }
+    
+  }
+
+  @media (min-width: 992px) {
+    .modal-lg {
+      width: 900px;
+    }
+  }
+  @media (min-width: 768px) {
+    .modal-xl {
+      width: 90%;
+     max-width:1500px;
+    }
+  }
+
+/* Boutton de validation */
+#submitPrevelemnt{
+    width: 500px;
+}
+@media (max-width:550px){
+
+#submitPrevelemnt{
+    width: 100%;
+}}
+
+/* resultat fonction */
+
+.fonction > #functionresult{
+    font-size: 20px;
+}
+
+#colLeftLigne, #colLeftProduit {
+    border-top: #333 solid 2px; 
+    border-left: #333 solid 2px; 
+    border-bottom: #333 solid 2px; 
+}
+#colRightProduit, #colRightLigne{
+    border: #333 solid 2px; 
+}
+
+#colLeftLigne p, #colLeftProduit p, #colRightProduit p, #colRightLigne p {
+    font-size: 30px;
+    width: 100%;
+    border-bottom: #333 solid 1px;
+    margin: 0;
+    padding: 15px;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------ADMIN--------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------*/
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+  }
+  
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+  
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    width: 1200px;
+  }
+  @media (min-width: 300px){
+    .modal-dialog {
+        max-width: 300px;
+       
+    }
+   
+  }
+  @media (min-width: 310px){
+    .modal-dialog {
+        max-width: 310px;
+       
+    }
+   
+  }
+  @media (min-width: 320px){
+    .modal-dialog {
+        max-width: 320px;
+       
+    }
+   
+  }
+  @media (min-width: 330px){
+    .modal-dialog {
+        max-width: 330px;
+       
+    }
+   
+  }
+  @media (min-width: 340px){
+    .modal-dialog {
+        max-width: 340px;
+       
+    }
+   
+  }
+  @media (min-width: 400px){
+    .modal-dialog {
+        max-width: 400px;
+       
+    }
+   
+  }
+
+  @media (min-width: 450px){
+    .modal-dialog {
+        max-width: 450px;
+       
+    }
+   
+  }
+
+  @media (min-width: 500px){
+    .modal-dialog {
+        max-width: 500px;
+       
+    }
+   
+  }
+  @media (min-width: 600px){
+    .modal-dialog {
+        max-width: 600px;
+       
+    }
+   
+  }
+
+  @media (min-width: 1000px){
+    .modal-dialog {
+        max-width: 1000px;
+       
+    }
+   
+  }
+  @media (min-width: 1200px){
+    .modal-dialog {
+        max-width: 1200px;
+       
+    }
+   
+  }
+
+  /*-----------------------------------*/
+
+/* NAV */
+
+/*-------------------------------------*/
+/*--------------------------Admin-------------------------------*/
+#bodyAdmin{
+    background-attachment: fixed;
+    background-image: url(../img/admin.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+   min-height: 100vh;
+    position: relative;
+   overflow: hidden;
+
+}
+
+#btnList{
+    width: 500px;
+}
+
+@media (max-width:600px){
+    #btnList{
+        width: 95%;
+    }
+    
+}
+
+/*------------------------Gestion des Utilisateurs-------------------*/
+
+ td, th,  thead th {
+
+}
+
+.tdHistory{
+        vertical-align: inherit !important;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tdHistoryPop{
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50px;
+  display: block;
+}
+
+.titleTab{
+  background-color: #2f2f2f;
+  color: white
+
+}
+.border{
+}
+td{
+
+}
+.th{
+      vertical-align: inherit;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table tbody+tbody {
+}
+/*-------------------------------------------------------------------*/
+
+/*----------------------- modal content -------------------------*/
+.ldpLabel{
+    width: 250px;
+    font-weight: bold;
+    display: flex;
+    align-self: center;
+}
+#champProduit .input{
+    width: 50px !important;
+    border-radius: 15px ;
+}
+@media (max-width:400px){
+   #champProduit .input{
+        width: 0% !important;
+        border-radius: 15px ;
+    }
+
+   
+}
+#LDP_modif .input{
+    border-radius: 15px ;
+}
+
+@media (max-width:600px){
+    #LDP_modif .input{
+         width: 100% !important;
+         border-radius: 15px ;
+     }
+     
+    
+ }
+
+.typechoice{
+    display: flex;
+    justify-content:end;
+}
+
+.dropdown{
+    width: 250px;
+}
+
+/*--------------------Ligne de production ----------------*/
+.fa-minus-circle{
+    color: #8d0000;
+}
+.fa-minus-circle:hover{
+    color: #db0000;
+}
+
+.ldp_table{
+    color: #000000;
+    text-decoration: none;
+    display: block;
+}
+
+.ldp_table:hover{
+    color: #202020;
+    text-decoration: none;
+    font-weight: bold;
+}
+#btnAjoutLDPLittle{
+    display: none;
+}
+@media (max-width:900px){
+    #btnAjoutLDPBig{
+        display: none;
+    }
+    #btnAjoutLDPLittle{
+        display: inline-block;
+    }
+    
+}
+#titleLittle{
+    display: none;
+
+}
+@media (max-width:900px){
+    #titleBig{
+        display: none;
+    }
+    #titleLittle{
+        display: inline-block;
+    }
+    
+}
+
+.textTab{
+    text-decoration: none !important;
+    color: #000000 !important;
+}
+.textTab:hover{
+    text-decoration: none !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+/* ----switch -------*/
+
+   .onoffswitch {
+       position: relative; width: 144px;
+       -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+   }
+
+   
+   
+   .onoffswitch-checkbox {
+       display: none;
+   }
+   
+   .onoffswitch-label {
+       display: block; overflow: hidden; cursor: pointer;
+       border: 2px solid #E3E3E3; border-radius: 36px;
+   }
+   
+   .onoffswitch-inner {
+       display: block; width: 200%; margin-left: -100%;
+       transition: margin 0.3s ease-in 0s;
+   }
+  
+   .onoffswitch-inner:before, .onoffswitch-inner:after {
+       display: block; float: left; width: 50%; height: 52px; padding: 0; line-height: 52px;
+       font-size: 17px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+       box-sizing: border-box;
+   }
+   
+   .onoffswitch-inner:before {
+       content: "Oui";
+       padding-left: 12px;
+       background-color: #329C37; color: #FFFFFF;
+   }
+   
+   .onoffswitch-inner:after {
+       content: "Non";
+       padding-right: 12px;
+       background-color: #CC1414; color: #FFFFFF;
+       text-align: right;
+   }
+   
+   .onoffswitch-switch {
+       display: block; width: 24px; margin: 14px;
+       margin-bottom: 20px;
+       background: #FFFFFF;
+       position: absolute; top: 0; bottom: 0;
+       right: 88px;
+       border: 2px solid #E3E3E3; border-radius: 36px;
+       transition: all 0.3s ease-in 0s;
+       height: 30px;
+   }   
+   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+       margin-left: 0;
+   }
+
+   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+       right: 0px; 
+   }
+
+   /* Select norme form */
+
+   @media (max-width:600px){
+       #LDP_modif .selectNormeForm{
+           width: 100%;
+       }
+   /* position probleme */
+
+       .fixProblemPosition{
+           position: absolute;
+           left: -10px;
+           top: 32px;
+       }
+
+       #passwordUser{
+           margin-left: 95px;
+       }
+   }
+
+   /* button add alignment */
+
+   @media (max-width:500px){
+       .btnAlign{
+           float: none !important;
+           display: block;
+           text-align: center;
+       }
+       .cardTitle{
+        text-align: center;
+        display: block;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        margin-bottom: 10px !important;
+    }
+   }
+
+
+@media print {
+    #nav{
+        display: none;
+    }
+    .btn{
+      display: none !important;
+    }
+    .card-header{
+      background-color: gray;
+    }
+  }
+
+/* ---------- formeEmballage css ----------- */
+  .btnAdd {
+        width: 150px;
+    height: 150px;
+    background-color: lightgray;
+    border-radius: 15px;
+    border: #263238 solid 1px;
+  }
+
+    .btnMaquette {
+        width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    border: #263238 solid 1px;
+  }
+
+  .iconAdd {
+    width: 100%;
+    font-size: 100px;
+    color: white;
+    text-align: center;
+    height: 100%;
+    line-height: 150px;
+  }
+
+  .bottomMaquette{
+    background-color: #263238;
+    height: 20%;
+    border-radius: 0px 0px 10px 10px;
+    color: white;
+    text-decoration: none;
+  }
+  .bottomMaquettetype{
+    background-color: #263238;
+    height: 20%;
+    border-radius: 10px 10px 0px 00px;
+    color: white;
+    text-decoration: none;
+  }
+.menuMaquette{
+  height: 45px;
+  position: relative;
+  right:  48px;
+ top: 37px;
+}
+
+.menuDocument{
+    height: 45px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+h1.text-white{
+  text-shadow: 1px 1px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000;
+}

@@ -1,0 +1,20 @@
+test.txt | 
+		test: 8700 +++ 02:25 +++ 8700 | 
+		{"nomGroupeN":"groupeC","ordreGroupeN":"3","colone":"1","groupeN":"122","valider":"VALIDER"} | 
+		{"nomGroupeN":"groupeC","ordreGroupeN":"3","colone":"2","groupeN":"124","valider":"VALIDER"} | 
+		colone1 | 
+		colone1 | 
+		 | 
+		INSERT INTO `message` (`id_message`, `id_sender`, `objetMsg`, `jointMsg`, `corpMsg`, `id_reponseMsg`, `origineMsg`, `tempEnvoiMsg`) VALUES (NULL, '4', 'nouv test aussi', '', '&lt;p&gt;tesgre tsdgre gdsrs&lt;/p&gt;', NULL, NULL, '2018-11-28 02:34:16'); | 
+		INSERT INTO `message` (`id_message`, `id_sender`, `objetMsg`, `jointMsg`, `corpMsg`, `id_reponseMsg`, `origineMsg`, `tempEnvoiMsg`) VALUES (NULL, '3', 'Re: nouv test aussi', '', '&lt;p&gt;y tr yere treu re&lt;/p&gt;', 24, NULL, '2018-11-28 02:35:46'); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('26', '4', 'nonLu', enCours); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('27', '4', 'nonLu', 'enCours'); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('28', '3', 'nonLu', 'terminer'); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('29', '4', 'nonLu', 'terminer'); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('30', '', 'nonLu', ''enAttente''); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('31', '', 'nonLu', ''enAttente''); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('32', '', 'nonLu', ''enAttente''); | 
+		INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('33', '', 'nonLu', ''enAttente''); | 
+		 | 
+		{"listRecept":"3;","objetMsg":"ytuyt","corpMsg":"<p>uy uyt u uyr uyt uyt<\/p>","valider":"ENVOYER"} | 
+		["3","2",""]
