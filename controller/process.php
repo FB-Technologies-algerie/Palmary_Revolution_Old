@@ -2,6 +2,7 @@
 	
 	require('model/process.php');
 
+
 	function setGroupe(){
 		if(isset($_POST['groupe']) && trim($_POST['groupe'], " \t.")!=''){
 			$_SESSION["groupe"] = trim($_POST['groupe'], " \t.");
@@ -211,8 +212,6 @@
 			var_dump("sftp connection failed");
 			return false;
 		}
-	
-	var_dump($remote_file_path);
 		return fopen("ssh2.sftp://$sftp$remote_file_path", $mode);
 	}
 	
@@ -222,14 +221,13 @@
 		$port = '22';
 		$ssh_user = 'debian';
 		$ssh_password = 'vz6SenfrKNQN';
-	
+	 
 	
 	// Parcourir chaque passage et générer un fichier CSV
 		 // Utiliser l'ID de passage pour récupérer les valeurs du passage
 		 $passage_values = get_passage_values($id_passage);
 		// Chemin du fichier CSV sur le serveur distant
 		$remote_csv_file = "/tmp/passage_" . $id_passage. '.csv';
-		var_dump($remote_csv_file);
 		// Créer le contenu CSV dans une variable temporaire
 		$csv_content = "Nom de la norme,Valeur saisie\n";
 		foreach ($passage_values as $row) {
@@ -239,15 +237,38 @@
 	
 	   // Vérification de la ressource de fichier
 	   if (!is_resource($file_handler)) {
-		   echo "Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant.";
+		$donnee['objetMsg'] = "envoi fichier csv";
+        $donnee['corpMsg'] = "Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant ".$remote_csv_file;
+		$donnee['etatConsigne'] = "enAttente";
+		envoiMessage($_SESSION['id_user'],$donnee,'NULL');
 	   } else {
 		   // Écrire le contenu du fichier CSV sur le serveur distant
 		   if (fwrite($file_handler, $csv_content) === false) {
-			   echo "Impossible d'écrire le contenu dans le fichier distant.";
+			$donnee['corpMsg'] = "Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file;
+			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
 		   } else {
-			   echo "Fichier CSV enregistré avec succès sur le serveur SFTP.";
+			$donnee['corpMsg'] = "Fichier CSV enregistré avec succès sur le serveur SFTP sur ".$remote_csv_file;
+			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
 		   }
 		   // Fermer le gestionnaire de fichier
 		   fclose($file_handler);
+		   return true;
 	   }
 	}
+
+	function envoiMessage($id_user,$donnee,$id_reponseMsg = 'NULL'){
+		$tempEnvoiMsg= date('Y-m-d H:i:s');
+		$etatConsigne = "enAttente"; // Défaut
+
+        if(isset($donnee['etatConsigne'])){
+        	$etatConsigne = $donnee['etatConsigne'];
+         }
+
+		(enregistrMsg($id_user,$donnee,$tempEnvoiMsg,$id_reponseMsg));
+
+
+			$id_message= recupIdLastMsg($id_user,isset($donnee['objetMsg']) ? $donnee['objetMsg'] : '',$tempEnvoiMsg);
+
+			affectMsg($id_message,'33' ,$etatConsigne);
+
+		}		
