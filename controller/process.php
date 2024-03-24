@@ -229,9 +229,9 @@
 		// Chemin du fichier CSV sur le serveur distant
 		$remote_csv_file = "/tmp/passage_" . $id_passage. '.csv';
 		// Créer le contenu CSV dans une variable temporaire
-		$csv_content = "Nom de la norme,Valeur saisie\n";
+		$csv_content = "Tag Name,Value,State\n";
 		foreach ($passage_values as $row) {
-			$csv_content .= $row['nomNorme'] . ',' . $row['valeurSaisie'] . "\n";
+			$csv_content .= $row['nomNorme'] . ',' . $row['valeurSaisie'] .", OK \n";
 		}
 	   $file_handler  = streamRemoteFile($remote_server,$port,$ssh_user,$ssh_password,$remote_csv_file,"w");
 	
@@ -241,14 +241,19 @@
         $donnee['corpMsg'] = "Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant ".$remote_csv_file;
 		$donnee['etatConsigne'] = "enAttente";
 		envoiMessage($_SESSION['id_user'],$donnee,'NULL');
+		error_log($donnee['corpMsg'], 3, "C:/wamp64/www/Revolution/Palmary_Revolution_Old/logs/error.log");
+        return false;
 	   } else {
 		   // Écrire le contenu du fichier CSV sur le serveur distant
 		   if (fwrite($file_handler, $csv_content) === false) {
 			$donnee['corpMsg'] = "Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file;
 			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
+			error_log($donnee['corpMsg'], 3, "C:/wamp64/www/Revolution/Palmary_Revolution_Old/logs/error.log");
+			return false;
 		   } else {
 			$donnee['corpMsg'] = "Fichier CSV enregistré avec succès sur le serveur SFTP sur ".$remote_csv_file;
-			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
+			//envoiMessage($_SESSION['id_user'],$donnee,'NULL');
+			error_log($donnee['corpMsg'], 3, "C:/wamp64/www/Revolution/Palmary_Revolution_Old/logs/error.log");
 		   }
 		   // Fermer le gestionnaire de fichier
 		   fclose($file_handler);

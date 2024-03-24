@@ -199,7 +199,7 @@ require('model/bdConnect.php');
 	function modifNorme($id_norme,$donnee,$lienNorme){
 		$lienNorme= ($lienNorme)? ",`lienNorme`='".valid($lienNorme)."' " : '';
 
-		$rep= requette("UPDATE `norme` SET `nomNorme`='".valid($donnee['nomNorme'])."',`typeNorme`='".valid($donnee['typeNorme'])."' ".$lienNorme.",`formuleNorme`='".valid($donnee['formuleNorme'])."',`uniteMesure`='".valid($donnee['uniteMesure'])."',`messageErreur`='".valid($donnee['messageErreur'])."',`isReset`=".valid($donnee['isReset'])." ,`parTime`='".valid($donnee['parTime'])."' ,`ordreNorme`=".valid($donnee['ordreNorme']).",`id_groupeN`=".valid($donnee['groupeN'])." ,`colone`=".valid($donnee['colone'])." WHERE `id_norme` = ".valid($id_norme)." ;");
+		$rep= requette("UPDATE `norme` SET `nomNorme`='".valid($donnee['nomNorme'])."',`Abreviation`='".valid($donnee['Abreviation'])."',`typeNorme`='".valid($donnee['typeNorme'])."' ".$lienNorme.",`formuleNorme`='".valid($donnee['formuleNorme'])."',`uniteMesure`='".valid($donnee['uniteMesure'])."',`messageErreur`='".valid($donnee['messageErreur'])."',`isReset`=".valid($donnee['isReset'])." ,`parTime`='".valid($donnee['parTime'])."' ,`ordreNorme`=".valid($donnee['ordreNorme']).",`id_groupeN`=".valid($donnee['groupeN'])." ,`colone`=".valid($donnee['colone'])." WHERE `id_norme` = ".valid($id_norme)." ;");
 
 		return true;
 	}
@@ -211,7 +211,7 @@ require('model/bdConnect.php');
 	}
 
 	function ajoutNorme($id_prod,$donnee,$lienNorme){
-		$rep= requette("INSERT INTO `norme`(`id_norme`, `nomNorme`, `typeNorme`, `lienNorme`, `formuleNorme`, `uniteMesure`, `messageErreur`, `isReset`, `parTime`, `ordreNorme`, `id_groupeN`, `colone`, `id_prod`, `active`) VALUES (null,'".valid($donnee['nomNorme'])."','".valid($donnee['typeNorme'])."','".valid($lienNorme)."','".valid($donnee['formuleNorme'])."','".valid($donnee['uniteMesure'])."','".valid($donnee['messageErreur'])."',".valid($donnee['isReset']).",'".valid($donnee['parTime'])."','".valid($donnee['ordreNorme'])."',".valid($donnee['groupeN']).",'".valid($donnee['colone'])."','".valid($id_prod)."', 1 );");
+		$rep= requette("INSERT INTO `norme`(`id_norme`, `nomNorme`,`Abreviation`, `typeNorme`, `lienNorme`, `formuleNorme`, `uniteMesure`, `messageErreur`, `isReset`, `parTime`, `ordreNorme`, `id_groupeN`, `colone`, `id_prod`, `active`) VALUES (null,'".valid($donnee['nomNorme'])."','".valid($donnee['Abreviation'])."','".valid($donnee['typeNorme'])."','".valid($lienNorme)."','".valid($donnee['formuleNorme'])."','".valid($donnee['uniteMesure'])."','".valid($donnee['messageErreur'])."',".valid($donnee['isReset']).",'".valid($donnee['parTime'])."','".valid($donnee['ordreNorme'])."',".valid($donnee['groupeN']).",'".valid($donnee['colone'])."','".valid($id_prod)."', 1 );");
 
 		$result= requette("SELECT `id_norme` FROM `norme` WHERE `id_prod`='".valid($id_prod)."' AND `nomNorme`='".valid($donnee['nomNorme'])."' ORDER BY `id_norme` DESC LIMIT 1");
 		return $result->fetch()['id_norme'];

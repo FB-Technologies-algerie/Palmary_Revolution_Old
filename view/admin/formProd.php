@@ -93,7 +93,8 @@
             <table id="table" class="table  table-striped table-hover table-bordered table-sm m-0" >
               <thead class="w-100">
                 <tr>
-                  <th style="width: 20%">Normes</th>
+                  <th style="width: 15%">Normes</th>
+                  <th style="width: 15%">Abréviation</th>
                   <th style="width: 10%">Type</th>
                  <th style="width: 15%">Valeur</th>
                   <th style="width: 15%">Alerte</th>
@@ -118,6 +119,7 @@
               <thead class="w-100">
                 <tr>
                   <th style="width: 20%">Normes</th>
+                  <th style="width: 20%">Abréviation</th>
                   <th style="width: 10%">Type</th>
                  <th style="width: 15%">Valeur</th>
                   <th style="width: 15%">Alerte</th>
@@ -434,7 +436,7 @@ function afficheNorme($norme){
         <div class="card-header textTab" style="background-color:#333;color:white;padding-right: 0px">
           <a href="#" class="text-white" style="text-decoration: none;" data-toggle="modal" data-target="#ajoutModifGroup" onclick="getGroup(<?= "'".$norme['id_norme']."','".valid($norme['nomNorme'])."','".$norme['ordreNorme']."','".$norme['id_groupeN']."','".$norme['colone']."','".$norme['lienNorme']."'" ?>)" id="<?= $norme['id_norme'] ?>"><?= $norme['nomNorme'] ?></a>
         
-          <div class="float-right" style="width: 20%;text-align: center;color: white">
+          <div class="float-right" style="width: 10%;text-align: center;color: white">
              <a><i class="fas fa-minus-circle text-white" data-toggle="modal" data-target="#supprime" onclick="getID(<?= $norme['id_norme'] ?>)"></i></a>
           </div>
           <div class="float-right" style="width: 5%;text-align: left;color: white">
@@ -452,7 +454,8 @@ function afficheNorme($norme){
     <?php }else{ ?>
               <table id="table" class="table  table-striped table-hover table-bordered table-sm m-0">
                 <tr>
-                  <td style="width: 20%"><a id="<?= $norme['id_norme'] ?>" class="textTab" href="#" data-toggle="modal" data-target="#ajoutModif" onclick="getLDPNorme(this)"><?= $norme['nomNorme'] ?></a></td>
+                  <td style="width: 15%"><a id="<?= $norme['id_norme'] ?>" class="textTab" href="#" data-toggle="modal" data-target="#ajoutModif" onclick="getLDPNorme(this)"><?= $norme['nomNorme'] ?></a></td>
+                  <td style="width: 15%"><?= $norme['Abreviation'] ?></td>
                   <td style="width: 10%"><?= $norme['typeNorme'] ?></td>
                   <td style="width: 15%"><?= reFormule($norme['formuleNorme']); ?></td>
                   <td style="width: 15%"><?= $norme['messageErreur'] ?></td>

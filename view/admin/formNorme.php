@@ -7,6 +7,20 @@
                       <input required type="text" name="nomNorme" class="input form-control ml-2" value="<?= $norme['nomNorme'] ?>">
                   </div>
                   <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100"> 
+                  <label for="abreviation" class="ldpLabel justify-content-middle text-left mr-2">Abréviation de la norme</label>
+                    <select required name="Abreviation" class="form-control ml-2">
+                        <option value="Poids_Total_g" <?= ($norme['Abreviation'] === 'Poids_Total_g') ? 'selected' : '' ?>>Poids_Total_g</option>
+                        <option value="Poids_Chocolat_g" <?= ($norme['Abreviation'] === 'Poids_Chocolat_g') ? 'selected' : '' ?>>Poids_Chocolat_g</option>
+                        <option value="Poids_Fourrage1_g" <?= ($norme['Abreviation'] === 'Poids_Fourrage1_g') ? 'selected' : '' ?>>Poids_Fourrage1_g</option>
+                        <option value="Poids_Fourrage2_g" <?= ($norme['Abreviation'] === 'Poids_Fourrage2_g') ? 'selected' : '' ?>>Poids_Fourrage2_g</option>
+                        <option value="Poids_Inclusions1_g" <?= ($norme['Abreviation'] === 'Poids_Inclusions1_g') ? 'selected' : '' ?>>Poids_Inclusions1_g</option>
+                        <option value="Poids_Inclusions2_g" <?= ($norme['Abreviation'] === 'Poids_Inclusions2_g') ? 'selected' : '' ?>>Poids_Inclusions2_g</option>
+                        <option value="Poids_Biscuit_Seul_g" <?= ($norme['Abreviation'] === 'Poids_Biscuit_Seul_g') ? 'selected' : '' ?>>Poids_Biscuit_Seul_g</option>
+                    </select>
+
+                        <br>
+                  </div>
+                  <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100"> 
                 <label for="number" class="ldpLabel justify-content-middle text-left" >document de la norme</label>
               <!--------------->
                     <div id="lienNorme">
