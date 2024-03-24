@@ -17,9 +17,10 @@
                 <table id="table" class="table  table-striped table-hover table-bordered table-sm" >
                     <thead class="w-100">
                         <tr>
-                          <th style="width:70%;">Ligne de Production</th>
-                          <th style="width:70%;">Unité affecté</th>
-                          <th style="width:15%;text-align:center;">Supprimer</th>
+                          <th style="width:30%;">Ligne de Production</th>
+                          <th style="width:30%;">Abreviation</th>
+                          <th style="width:30%;">Unité affecté</th>
+                          <th style="width:50%;text-align:center;">Supprimer</th>
                         </tr>
                     </thead>
                 </table>
@@ -42,9 +43,10 @@
                       <?php $listLignes= recupListLignesOfCategorie($categorie['id_categorie'],$_SESSION['droitAdmin']); ?>
                       <?php while($ligne= $listLignes->fetch()){ ?>
                               <tr>
-                                <td><a id="<?= $ligne['id_ligneP'] ?>" onclick="updateLigne(<?= "'".$ligne['id_ligneP']."','".$ligne['nomLigneP']."','".$ligne['id_categorie']."','".$ligne['id_unite']."'" ?>)" href="#" data-toggle="modal" data-target="#ajoutModifLigne" class="ldp_table"><?= $ligne['nomLigneP'] ?></a></td>
-                                <td><?= recupNomUnite($ligne['id_unite']) ?></td>
-                                <td class="text-center"><a onclick="removeLigne(<?= $ligne['id_ligneP'] ?>)" href="" data-toggle="modal" data-target="#supprime"><i class="fas fa-minus-circle" ></i></a></td>
+                                <td style="width:30%;"><a id="<?= $ligne['id_ligneP'] ?>" onclick="updateLigne(<?= "'".$ligne['id_ligneP']."','".$ligne['nomLigneP']."','".$ligne['AbreviationLigne']."','".$ligne['id_categorie']."','".$ligne['id_unite']."'" ?>)" href="#" data-toggle="modal" data-target="#ajoutModifLigne" class="ldp_table"><?= $ligne['nomLigneP'] ?></a></td>
+                                <td style="width:30%;"><?= $ligne['AbreviationLigne'] ?></td>
+                                <td style="width:30%;"><?= recupNomUnite($ligne['id_unite']) ?></td>
+                                <td style="width:50%;" class="text-center"><a onclick="removeLigne(<?= $ligne['id_ligneP'] ?>)" href="" data-toggle="modal" data-target="#supprime"><i class="fas fa-minus-circle" ></i></a></td>
                               </tr>
                           <?php 
                             }
@@ -67,9 +69,10 @@
                       <?php $listLignes= recupListLignesOfCategorie('',$_SESSION['droitAdmin']); ?>
                       <?php while($ligne= $listLignes->fetch()){ ?>
                               <tr>
-                                <td><a id="<?= $ligne['id_ligneP'] ?>" onclick="updateLigne(<?= "'".$ligne['id_ligneP']."','".$ligne['nomLigneP']."','".$ligne['id_categorie']."','".$ligne['id_unite']."'" ?>)" href="#" data-toggle="modal" data-target="#ajoutModifLigne" class="ldp_table"><?= $ligne['nomLigneP'] ?></a></td>
-                                <td><?= recupNomUnite($ligne['id_unite']) ?></td>
-                                <td class="text-center"><a onclick="removeLigne(<?= $ligne['id_ligneP'] ?>)" href="" data-toggle="modal" data-target="#supprime"><i class="fas fa-minus-circle" ></i></a></td>
+                                <td style="width:30%;"><a id="<?= $ligne['id_ligneP'] ?>" onclick="updateLigne(<?= "'".$ligne['id_ligneP']."','".$ligne['nomLigneP']."','".$ligne['AbreviationLigne']."','".$ligne['id_categorie']."','".$ligne['id_unite']."'" ?>)" href="#" data-toggle="modal" data-target="#ajoutModifLigne" class="ldp_table"><?= $ligne['nomLigneP'] ?></a></td>
+                                <td style="width:30%;"><?= $ligne['AbreviationLigne'] ?></td>
+                                <td style="width:30%;"><?= recupNomUnite($ligne['id_unite']) ?></td>
+                                <td style="width:50%;" class="text-center"><a onclick="removeLigne(<?= $ligne['id_ligneP'] ?>)" href="" data-toggle="modal" data-target="#supprime"><i class="fas fa-minus-circle" ></i></a></td>
                               </tr>
                           <?php 
                             }
@@ -121,6 +124,10 @@
                     <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100"> 
                             <label for="text" class="ldpLabel justify-content-middle text-left" >Nom</label>
                             <input required type="text" id="nomLigneP" name="nomLigneP" class="input form-control ml-2" value="">
+                    </div>
+                    <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100"> 
+                            <label for="text" class="ldpLabel justify-content-middle text-left" >Abreviation</label>
+                            <input required type="text" id="AbreviationLigne" name="AbreviationLigne" class="input form-control ml-2" value="">
                     </div>
                     <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100">
                             <label for="text" class="ldpLabel justify-content-middle text-left display-inline">Catégorie</label>

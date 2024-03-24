@@ -220,7 +220,7 @@ require('model/bdConnect.php');
 	function ajoutLigneP($donnee){
 		if($donnee['categorie']=='')$donnee['categorie']='NULL';
 		
-		$rep= requette("INSERT INTO `ligne production`(`id_ligneP`, `nomLigneP`, `id_categorie`, `id_unite`, `active`) VALUES (null,'".valid($donnee['nomLigneP'])."',".valid($donnee['categorie']).",".valid($donnee['unite']).", 1);");
+		$rep= requette("INSERT INTO `ligne production`(`id_ligneP`, `nomLigneP`,`AbreviationLigne`, `id_categorie`, `id_unite`, `active`) VALUES (null,'".valid($donnee['nomLigneP'])."','".valid($donnee['AbreviationLigne'])."',".valid($donnee['categorie']).",".valid($donnee['unite']).", 1);");
 		return true;
 	}
 
