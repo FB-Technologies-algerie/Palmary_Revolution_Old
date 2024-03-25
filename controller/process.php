@@ -1,6 +1,7 @@
 <?php
 	
 	require('model/process.php');
+    include_once('config.php');
 
 
 	function setGroupe(){
@@ -217,21 +218,55 @@
 	
 	
 	function upload_passage($id_passage){
-		$remote_server = '193.70.112.49';
-		$port = '22';
-		$ssh_user = 'debian';
-		$ssh_password = 'vz6SenfrKNQN';
-	 
+		$remote_server = REMOTE_SERVER;
+		$port = PORT;
+		$ssh_user = SSH_USER;
+		$ssh_password = SSH_PASSWORD;
 	
 	// Parcourir chaque passage et générer un fichier CSV
 		 // Utiliser l'ID de passage pour récupérer les valeurs du passage
 		 $passage_values = get_passage_values($id_passage);
 		// Chemin du fichier CSV sur le serveur distant
-		$remote_csv_file = "/tmp/passage_" . $id_passage. '.csv';
+		$remote_csv_file = "/tmp/passage-" . $id_passage . '-' .date('Y-m-d_H-i-s'). '.csv';
 		// Créer le contenu CSV dans une variable temporaire
 		$csv_content = "Tag Name,Value,State\n";
 		foreach ($passage_values as $row) {
-			$csv_content .= $row['nomNorme'] . ',' . $row['valeurSaisie'] .", OK \n";
+			$uniteMesure = $row['uniteMesure'];
+			$valeurSaisie = '';
+			
+			// Convertir en grammes en fonction de l'unité de mesure
+			switch ($uniteMesure) {
+				case 'g':
+					$valeurSaisie = $row['valeurSaisie'];
+					break;
+				case 'kg':
+					// Si l'unité de mesure est en kilogrammes, convertir en grammes
+					$valeurSaisie = $row['valeurSaisie'] * 1000; 
+					break;
+			    case 'dg':
+					// Si l'unité de mesure est en décigramme, convertir en grammes
+					$valeurSaisie = $row['valeurSaisie'] * 0.1; 
+					break;
+				case 'cg':
+					// Si l'unité de mesure est en centigramme, convertir en grammes
+					$valeurSaisie = $row['valeurSaisie'] * 0.01; 
+					break;
+				case 'mg':
+						// Si l'unité de mesure est en milligramme, convertir en grammes
+					$valeurSaisie = $row['valeurSaisie'] * 0.001; 
+					break;				
+				case '%':
+					// Si l'unité de mesure est en pourcentage, laissez tel quel (pas de conversion en grammes)
+					break;
+				case 'mm':
+					// Si l'unité de mesure est en millimètres, laisser tel quel
+					break;
+				default:
+					break;
+			}
+
+    // Ajouter à la chaîne CSV
+        $csv_content .= $row['TagName'] . ',' . $valeurSaisie . ", OK \n";;
 		}
 	   $file_handler  = streamRemoteFile($remote_server,$port,$ssh_user,$ssh_password,$remote_csv_file,"w");
 	
@@ -241,19 +276,19 @@
         $donnee['corpMsg'] = "Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant ".$remote_csv_file;
 		$donnee['etatConsigne'] = "enAttente";
 		envoiMessage($_SESSION['id_user'],$donnee,'NULL');
-		error_log($donnee['corpMsg'], 3, "C:/wamp64/www/Revolution/Palmary_Revolution_Old/logs/error.log");
+		error_log($donnee['corpMsg'], 3, ROOT_PATH . '/error.log');
         return false;
 	   } else {
 		   // Écrire le contenu du fichier CSV sur le serveur distant
 		   if (fwrite($file_handler, $csv_content) === false) {
 			$donnee['corpMsg'] = "Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file;
 			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
-			error_log($donnee['corpMsg'], 3, "C:/wamp64/www/Revolution/Palmary_Revolution_Old/logs/error.log");
+			error_log($donnee['corpMsg'], 3, ROOT_PATH . '/error.log');
 			return false;
 		   } else {
 			$donnee['corpMsg'] = "Fichier CSV enregistré avec succès sur le serveur SFTP sur ".$remote_csv_file;
-			//envoiMessage($_SESSION['id_user'],$donnee,'NULL');
-			error_log($donnee['corpMsg'], 3, "C:/wamp64/www/Revolution/Palmary_Revolution_Old/logs/error.log");
+			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
+			error_log($donnee['corpMsg'], 3, ROOT_PATH . '/error.log');
 		   }
 		   // Fermer le gestionnaire de fichier
 		   fclose($file_handler);
@@ -273,7 +308,11 @@
 
 
 			$id_message= recupIdLastMsg($id_user,isset($donnee['objetMsg']) ? $donnee['objetMsg'] : '',$tempEnvoiMsg);
+			$liste_admin =recupAdminId();
+			
 
-			affectMsg($id_message,'33' ,$etatConsigne);
+            foreach($liste_admin as $admin){
+				affectMsg($id_message,$admin['id_user'] ,$etatConsigne);
+			}
 
 		}		

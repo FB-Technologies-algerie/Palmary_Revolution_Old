@@ -141,7 +141,13 @@ require('model/bdConnect.php');
 	}
 /*********************** */
 function get_passage_values($id_passage){
-    $req = requette("SELECT n.nomNorme, s.valeurSaisie FROM saisie s INNER JOIN norme n ON s.id_norme = n.id_norme INNER JOIN passage p ON s.id_passage = p.id_passage WHERE p.id_passage = ".valide($id_passage).";");
+    $req = requette("SELECT CONCAT('CQ_', l.AbreviationLigne, '_Recette_', n.Abreviation) AS TagName,s.valeurSaisie,n.uniteMesure FROM saisie s INNER JOIN norme n ON s.id_norme = n.id_norme 
+	INNER JOIN passage p ON s.id_passage = p.id_passage
+	INNER JOIN produit pr ON pr.id_prod = p.id_prod
+	INNER JOIN `ligne production` l ON pr.id_ligneP = l.id_ligneP 
+	WHERE n.`Abreviation` in 
+	('Poids_Total_g','Poids_Chocolat_g','Poids_Fourrage1_g','Poids_Fourrage2_g','Poids_Inclusions1_g','Poids_Inclusions2_g','Poids_Biscuit_Seul_g')
+	AND p.id_passage = ".valide($id_passage).";");
       return $req;
 }
 
@@ -162,3 +168,9 @@ function affectMsg($id_message,$id_recepteur,$etatConsigne="NULL"){
 	$rep= requette("INSERT INTO `reception message` (`id_message`, `id_recepteur`, `etatMsg`, `etatConsigne`) VALUES ('".valid($id_message)."', '".valid($id_recepteur)."', 'nonLu', ".$etatConsigne.");");
 }
 
+function recupAdminId(){
+	$type = valide('admin');
+	$rep= requette("SELECT `id_user` FROM `user` WHERE `type` = '".$type."';");
+	
+	return $rep;
+}
