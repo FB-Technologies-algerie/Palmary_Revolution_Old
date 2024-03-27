@@ -273,22 +273,22 @@
 	   // Vérification de la ressource de fichier
 	   if (!is_resource($file_handler)) {
 		$donnee['objetMsg'] = "envoi fichier csv";
-        $donnee['corpMsg'] = "Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant ".$remote_csv_file;
+        $donnee['corpMsg'] = "Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant ".$remote_csv_file."\n";
 		$donnee['etatConsigne'] = "enAttente";
 		envoiMessage($_SESSION['id_user'],$donnee,'NULL');
-		error_log($donnee['corpMsg'], 3, ROOT_PATH . '/error.log');
+		error_log($donnee['corpMsg']. PHP_EOL, 3, ROOT_PATH . '/error.log');
         return false;
 	   } else {
 		   // Écrire le contenu du fichier CSV sur le serveur distant
 		   if (fwrite($file_handler, $csv_content) === false) {
-			$donnee['corpMsg'] = "Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file;
+			$donnee['corpMsg'] = "Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file."\n";
 			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
-			error_log($donnee['corpMsg'], 3, ROOT_PATH . '/error.log');
+			error_log($donnee['corpMsg'] . PHP_EOL, 3, ROOT_PATH . '/error.log');
 			return false;
 		   } else {
-			$donnee['corpMsg'] = "Fichier CSV enregistré avec succès sur le serveur SFTP sur ".$remote_csv_file;
-			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
-			error_log($donnee['corpMsg'], 3, ROOT_PATH . '/error.log');
+			$donnee['corpMsg'] = "Fichier CSV enregistré avec succès sur le serveur SFTP sur ".$remote_csv_file."\n";
+			//envoiMessage($_SESSION['id_user'],$donnee,'NULL');
+			error_log($donnee['corpMsg']. PHP_EOL, 3, ROOT_PATH . '/error.log');
 		   }
 		   // Fermer le gestionnaire de fichier
 		   fclose($file_handler);

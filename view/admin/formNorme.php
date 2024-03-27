@@ -7,8 +7,9 @@
                       <input required type="text" name="nomNorme" class="input form-control ml-2" value="<?= $norme['nomNorme'] ?>">
                   </div>
                   <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100"> 
-                  <label for="abreviation" class="ldpLabel justify-content-middle text-left mr-2">Abréviation de la norme</label>
-                    <select required name="Abreviation" class="form-control ml-2">
+                  <label for="Abreviation" class="ldpLabel justify-content-middle text-left mr-2">Abréviation de la norme</label>
+                    <select required name="Abreviation" id="Abreviation" class="form-control ml-2" onchange="disableOptions()">
+                        <option value=" " <?= ($norme['Abreviation'] === ' ') ? 'selected' : '' ?>>Aucun</option>
                         <option value="Poids_Total_g" <?= ($norme['Abreviation'] === 'Poids_Total_g') ? 'selected' : '' ?>>Poids_Total_g</option>
                         <option value="Poids_Chocolat_g" <?= ($norme['Abreviation'] === 'Poids_Chocolat_g') ? 'selected' : '' ?>>Poids_Chocolat_g</option>
                         <option value="Poids_Fourrage1_g" <?= ($norme['Abreviation'] === 'Poids_Fourrage1_g') ? 'selected' : '' ?>>Poids_Fourrage1_g</option>
@@ -80,7 +81,7 @@
 
                         <label for="text" class="ldpLabel justify-content-middle text-left display-inline mr-3" >Type de la norme</label>
 
-                            <select required name="typeNorme" class="selectNormeForm custom-select custom-select-lg " onchange="setchoice(this.value)">
+                            <select required name="typeNorme" id="typeNorme" class="selectNormeForm custom-select custom-select-lg " onchange="setchoice(this.value)">
                                     <option value="">Ouvrir le menu de selection</option>
                                     <option <?php if($norme['typeNorme']=='texte') echo 'selected'; ?> value="texte" >Texte</option>
                                     <option <?php if($norme['typeNorme']=='booleen') echo 'selected'; ?> value="booleen" >Commutateur</option>
@@ -454,5 +455,29 @@ function closeM(){
   }
 
   timerValue();
+
+</script>
+<script>
+
+    // Définissez la fonction disableOptions()
+    function disableOptions() {
+        var selectNorme = document.getElementById('typeNorme');
+        console.log(selectNorme);
+        var abreviation = document.getElementById('Abreviation');
+        console.log(abreviation);
+        // Désactiver les options "Texte" et "Commutateur" si un champ "Poids" est sélectionné
+        if (abreviation.value.indexOf('Poids_') !== -1) {
+            for (var i = 0; i < selectNorme.options.length; i++) {
+                if (selectNorme.options[i].value === 'texte' || selectNorme.options[i].value === 'booleen') {
+                    selectNorme.options[i].disabled = true;
+                }
+            }
+        } else {
+            // Activer toutes les options si aucun champ "Poids" n'est sélectionné
+            for (var i = 0; i < selectNorme.options.length; i++) {
+                selectNorme.options[i].disabled = false;
+            }
+        }
+    }
 
 </script>
