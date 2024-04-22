@@ -174,7 +174,7 @@
 /****** fin imad ******/	
 
 	function formNorme($action,$id){
-		$norme= array('id_norme' =>'','nomNorme' =>'','Abreviation' =>'','typeNorme' =>'','lienNorme' =>array('type' =>'','lien' =>''),'formuleNorme' =>'','uniteMesure' =>'','messageErreur' =>'','ordreNorme' =>'', 'isReset'=>'', 'parTime'=>'','time'=>0, 'id_groupeN'=>'', 'colone'=>'');
+		$norme= array('id_norme' =>'','nomNorme' =>'','Abreviation' =>'','typeNorme' =>'','lienNorme' =>array('type' =>'','lien' =>''),'formuleNorme' =>'','uniteMesure' =>'','messageErreur' =>'','ordreNorme' =>'', 'isReset'=>'', 'parTime'=>'','time'=>0, 'id_groupeN'=>'', 'colone'=>'', 'id_prod'=>'');
 		$min=$max=$formule=$reFormule=$valeur='';
 		$listGroupeN= null; 
 

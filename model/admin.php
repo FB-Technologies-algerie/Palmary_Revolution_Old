@@ -210,6 +210,11 @@ require('model/bdConnect.php');
 		return true;
 	}
 
+	function recupAbreviationNorme($id_prod){
+		$rep= requette("SELECT  `id_norme`,`id_prod`,`Abreviation` FROM `norme` WHERE `id_prod` = ".valid($id_prod).";");
+
+		return $rep->fetchAll();
+	}
 	function ajoutNorme($id_prod,$donnee,$lienNorme){
 		$rep= requette("INSERT INTO `norme`(`id_norme`, `nomNorme` ,`Abreviation`, `typeNorme`, `lienNorme`, `formuleNorme`, `uniteMesure`, `messageErreur`, `isReset`, `parTime`, `ordreNorme`, `id_groupeN`, `colone`, `id_prod`, `active`) VALUES (null,'".valid($donnee['nomNorme'])."','".valid($donnee['Abreviation'])."','".valid($donnee['typeNorme'])."','".valid($lienNorme)."','".valid($donnee['formuleNorme'])."','".valid($donnee['uniteMesure'])."','".valid($donnee['messageErreur'])."',".valid($donnee['isReset']).",'".valid($donnee['parTime'])."','".valid($donnee['ordreNorme'])."',".valid($donnee['groupeN']).",'".valid($donnee['colone'])."','".valid($id_prod)."', 1 );");
 

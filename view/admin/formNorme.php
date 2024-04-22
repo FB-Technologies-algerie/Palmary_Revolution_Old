@@ -6,18 +6,57 @@
                       <label for="text" class="ldpLabel justify-content-middle text-left mr-2" >Nom de la norme</label>
                       <input required type="text" name="nomNorme" class="input form-control ml-2" value="<?= $norme['nomNorme'] ?>">
                   </div>
+                  <?php
+                      // Fonction pour récupérer les abréviations déjà choisies pour les autres normes du même produit
+                      function getDisabledOptions($productId, $abreviations)
+                      {
+                          $disabledOptions = [];
+                          foreach ($abreviations as $abreviation) {
+                              if ((string) $abreviation['id_prod'] === $productId) {
+                                  $disabledOptions[] = $abreviation['Abreviation'];
+                              }
+                          }
+
+                          return $disabledOptions;
+                      }
+                      if($norme['id_prod'] <> ''){
+                           
+                          $currentProductId = $norme['id_prod'];
+                          $abreviations = recupAbreviationNorme($norme['id_prod']);
+                      }
+                      else{
+                        $currentProductId = $id;
+                        $abreviations = recupAbreviationNorme($id);
+                      } 
+                      
+                      // Récupérez les abréviations déjà choisies pour les autres normes du même produit
+                      $disabledOptions = getDisabledOptions($currentProductId, $abreviations);
+
+                      //liste des Abriviations
+                      $abreviationsliste = [
+                        ['Abreviation' => 'Poids_Total_g'],
+                        ['Abreviation' => 'Poids_Chocolat_g'],
+                        ['Abreviation' => 'Poids_Fourrage1_g'],
+                        ['Abreviation' => 'Poids_Fourrage2_g'],
+                        ['Abreviation' => 'Poids_Inclusions1_g'],
+                        ['Abreviation' => 'Poids_Inclusions2_g'],
+                        ['Abreviation' => 'Poids_Biscuit_Seul_g'],
+                    ];
+                    
+                      ?>
+
                   <div id="LDP_modif" class="input-group input-group-lg form-group mx-left mb-3 w-100"> 
                   <label for="Abreviation" class="ldpLabel justify-content-middle text-left mr-2">Abréviation de la norme</label>
-                    <select required name="Abreviation" id="Abreviation" class="form-control ml-2" onchange="disableOptions()">
+                    <select required name="Abreviation" id="Abreviation" class="form-control ml-2" onchange="disableOptions()" data-product-id="<?= $norme['id_prod'] ?>">
                         <option value=" " <?= ($norme['Abreviation'] === ' ') ? 'selected' : '' ?>>Aucun</option>
-                        <option value="Poids_Total_g" <?= ($norme['Abreviation'] === 'Poids_Total_g') ? 'selected' : '' ?>>Poids_Total_g</option>
-                        <option value="Poids_Chocolat_g" <?= ($norme['Abreviation'] === 'Poids_Chocolat_g') ? 'selected' : '' ?>>Poids_Chocolat_g</option>
-                        <option value="Poids_Fourrage1_g" <?= ($norme['Abreviation'] === 'Poids_Fourrage1_g') ? 'selected' : '' ?>>Poids_Fourrage1_g</option>
-                        <option value="Poids_Fourrage2_g" <?= ($norme['Abreviation'] === 'Poids_Fourrage2_g') ? 'selected' : '' ?>>Poids_Fourrage2_g</option>
-                        <option value="Poids_Inclusions1_g" <?= ($norme['Abreviation'] === 'Poids_Inclusions1_g') ? 'selected' : '' ?>>Poids_Inclusions1_g</option>
-                        <option value="Poids_Inclusions2_g" <?= ($norme['Abreviation'] === 'Poids_Inclusions2_g') ? 'selected' : '' ?>>Poids_Inclusions2_g</option>
-                        <option value="Poids_Biscuit_Seul_g" <?= ($norme['Abreviation'] === 'Poids_Biscuit_Seul_g') ? 'selected' : '' ?>>Poids_Biscuit_Seul_g</option>
-                    </select>
+                          <?php foreach ($abreviationsliste as $abreviation) : ?>
+                              <?php if (in_array($abreviation['Abreviation'], $disabledOptions)) : ?>
+                                  <option value="<?= $abreviation['Abreviation'] ?>" disabled><?= $abreviation['Abreviation'] ?></option>
+                              <?php else : ?>
+                                  <option value="<?= $abreviation['Abreviation'] ?>"><?= $abreviation['Abreviation'] ?></option>
+                              <?php endif; ?>
+                          <?php endforeach; ?>
+                        </select>
 
                         <br>
                   </div>
@@ -481,3 +520,4 @@ function closeM(){
     }
 
 </script>
+

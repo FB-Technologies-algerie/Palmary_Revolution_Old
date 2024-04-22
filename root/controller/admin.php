@@ -174,7 +174,7 @@
 /****** fin imad ******/	
 
 	function formNorme($action,$id){
-		$norme= array('id_norme' =>'','nomNorme' =>'','typeNorme' =>'','lienNorme' =>array('type' =>'','lien' =>''),'formuleNorme' =>'','uniteMesure' =>'','messageErreur' =>'','ordreNorme' =>'', 'isReset'=>'', 'parTime'=>'','time'=>0, 'id_groupeN'=>'', 'colone'=>'');
+		$norme= array('id_norme' =>'','nomNorme' =>'','typeNorme' =>'','lienNorme' =>array('type' =>'','lien' =>''),'formuleNorme' =>'','uniteMesure' =>'','messageErreur' =>'','ordreNorme' =>'', 'isReset'=>'', 'parTime'=>'','time'=>0, 'id_groupeN'=>'', 'colone'=>'', 'id_prod'=>'');
 		$min=$max=$formule=$reFormule=$valeur='';
 		$listGroupeN= null; 
 
@@ -228,7 +228,6 @@
 		if($action=='addP'){
 			$listNorme= recupNormeProdNotGBT($id);
 			$listGroupeN= recupGroupeNProd($id);
-
 			require('view/admin/formNorme.php');
 		}elseif($action=='modif'){
 			$norme = recupNorme($id);
@@ -236,7 +235,6 @@
 
 			$listNorme= recupNormeProdNotGBT($norme['id_prod']);
 			$listGroupeN= recupGroupeNProd($norme['id_prod']);
-
 			$norme['time']= gmdate("H:i", $norme['parTime']);
 			
 			if($norme['typeNorme']=='valeur'){
@@ -251,6 +249,8 @@
 				$min= explode('-', explode('#=#', $norme['formuleNorme'])[1])[0];
 				$max= explode('-', explode('#=#', $norme['formuleNorme'])[1])[1];
 			}
+			
+            
 			require('view/admin/formNorme.php');	
 		}else header('Location: '.$_SESSION['url']);
 	  }
