@@ -179,7 +179,7 @@ require('model/bdConnect.php');
 
 	function modifLigneP($id_ligneP,$donnee){
 		if($donnee['categorie']=='')$donnee['categorie']='NULL';
-		$rep= requette("UPDATE `ligne production` SET `nomLigneP` = '".valid($donnee['nomLigneP'])."', `id_categorie`=".valid($donnee['categorie']).", `id_unite` = '".valid($donnee['unite'])."' WHERE `ligne production`.`id_ligneP` = ".valid($id_ligneP).";");
+		$rep= requette("UPDATE `ligne production` SET `nomLigneP` = '".valid($donnee['nomLigneP'])."',`AbreviationLigne`='".valid($donnee['AbreviationLigne'])."', `id_categorie`=".valid($donnee['categorie']).", `id_unite` = '".valid($donnee['unite'])."' WHERE `ligne production`.`id_ligneP` = ".valid($id_ligneP).";");
 
 		return true;
 	}

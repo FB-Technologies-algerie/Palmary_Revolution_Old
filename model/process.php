@@ -141,7 +141,7 @@ require('model/bdConnect.php');
 	}
 /*********************** */
 function get_passage_values($id_passage){
-    $req = requette("SELECT CONCAT('CQ_', l.AbreviationLigne, '_Recette_', n.Abreviation) AS TagName,s.valeurSaisie,n.uniteMesure FROM saisie s INNER JOIN norme n ON s.id_norme = n.id_norme 
+    $req = requette("SELECT CONCAT('CQ_', l.AbreviationLigne, '_Recette_') AS TagName, n.Abreviation,s.valeurSaisie,n.uniteMesure FROM saisie s INNER JOIN norme n ON s.id_norme = n.id_norme 
 	INNER JOIN passage p ON s.id_passage = p.id_passage
 	INNER JOIN produit pr ON pr.id_prod = p.id_prod
 	INNER JOIN `ligne production` l ON pr.id_ligneP = l.id_ligneP 

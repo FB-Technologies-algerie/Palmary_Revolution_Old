@@ -79,9 +79,14 @@
 	}
 
 	function terminePassage($id_passage,$comment){
-		terminePassageBD($id_passage,$comment);
-		upload_passage($id_passage);
-		header('Location: '.$_SESSION['url']);
+		terminePassageBD($id_passage, $comment);
+		header('Location: ' . $_SESSION['url']);
+		try {
+			upload_passage($id_passage);
+		} catch (Exception $e) {
+			error_log("Erreur lors de l'upload du passage : " . $e->getMessage(). PHP_EOL, 3, ROOT_PATH . '/error.log');
+			header('Location: ' . $_SESSION['url']);
+		}
 	}
 
 	function reecrireLienA($lien){
@@ -194,6 +199,32 @@
 
 	function streamRemoteFile($remote_server,$port,$ssh_user,$ssh_password,$remote_file_path,$mode)
 	{
+		try {
+			// Tentative de connexion au serveur distant
+			if (!($connection = ftp_connect($remote_server))) {
+				throw new Exception("Impossible de se connecter au serveur distant");
+				
+			}
+		
+			// Tentative d'authentification sur le serveur distant
+			if (!ftp_login($connection, $ssh_user, $ssh_password)) {
+				throw new Exception("Impossible de s'authentifier sur le serveur");
+				
+			}
+		
+		
+			// Retourner le gestionnaire de fichier
+			return fopen("ftp://$ssh_user:$ssh_password@$remote_server$remote_file_path", $mode);
+		} catch (Exception $e) {
+			// Attraper et afficher les exceptions
+			var_dump($e->getMessage());
+			return false;
+		}
+		
+	}
+	/*
+	function streamRemoteFile($remote_server,$port,$ssh_user,$ssh_password,$remote_file_path,$mode)
+	{
 		if (!($connection = ssh2_connect($remote_server, $port)))
 		{
 			var_dump("Impossible de se connecter au serveur distant");
@@ -214,61 +245,104 @@
 			return false;
 		}
 		return fopen("ssh2.sftp://$sftp$remote_file_path", $mode);
-	}
+	}*/
 	
 	
 	function upload_passage($id_passage){
+		try{
 		$remote_server = REMOTE_SERVER;
 		$port = PORT;
 		$ssh_user = SSH_USER;
 		$ssh_password = SSH_PASSWORD;
+		$path = PATH_FILE;
 	
 	// Parcourir chaque passage et générer un fichier CSV
 		 // Utiliser l'ID de passage pour récupérer les valeurs du passage
 		 $passage_values = get_passage_values($id_passage);
 		// Chemin du fichier CSV sur le serveur distant
-		$remote_csv_file = "/tmp/passage-" . $id_passage . '-' .date('Y-m-d_H-i-s'). '.csv';
+		$remote_csv_file = $path."/passage-" . $id_passage . '-' .date('Y-m-d_H-i-s'). '.csv';
 		// Créer le contenu CSV dans une variable temporaire
-		$csv_content = "Tag Name,Value,State\n";
-		foreach ($passage_values as $row) {
-			$uniteMesure = $row['uniteMesure'];
-			$valeurSaisie = '';
-			
-			// Convertir en grammes en fonction de l'unité de mesure
-			switch ($uniteMesure) {
-				case 'g':
-					$valeurSaisie = $row['valeurSaisie'];
-					break;
-				case 'kg':
-					// Si l'unité de mesure est en kilogrammes, convertir en grammes
-					$valeurSaisie = $row['valeurSaisie'] * 1000; 
-					break;
-			    case 'dg':
-					// Si l'unité de mesure est en décigramme, convertir en grammes
-					$valeurSaisie = $row['valeurSaisie'] * 0.1; 
-					break;
-				case 'cg':
-					// Si l'unité de mesure est en centigramme, convertir en grammes
-					$valeurSaisie = $row['valeurSaisie'] * 0.01; 
-					break;
-				case 'mg':
-						// Si l'unité de mesure est en milligramme, convertir en grammes
-					$valeurSaisie = $row['valeurSaisie'] * 0.001; 
-					break;				
-				case '%':
-					// Si l'unité de mesure est en pourcentage, laissez tel quel (pas de conversion en grammes)
-					break;
-				case 'mm':
-					// Si l'unité de mesure est en millimètres, laisser tel quel
-					break;
-				default:
-					break;
-			}
+		$csv_content = "Tag Name;Value;State\n";
+		$tagsToCheck = [
+			'Poids_Total_g',
+			'Poids_Chocolat_g',
+			'Poids_Fourrage1_g',
+			'Poids_Fourrage2_g',
+			'Poids_Inclusions1_g',
+			'Poids_Inclusions2_g',
+			'Poids_Biscuit_Seul_g'
+		];
+		
+        // Initialiser un tableau pour stocker les valeurs trouvées
+        $tagValues = array_fill_keys($tagsToCheck, '0');
+        $tagNames = array_fill_keys($tagsToCheck, '');
 
-    // Ajouter à la chaîne CSV
-        $csv_content .= $row['TagName'] . ',' . $valeurSaisie . ", OK \n";;
-		}
-	   $file_handler  = streamRemoteFile($remote_server,$port,$ssh_user,$ssh_password,$remote_csv_file,"w");
+        // Remplir le tableau avec les valeurs trouvées dans $passage_values
+        foreach ($passage_values as $row) {
+            $tagName = trim($row['TagName']); // Supprimer les espaces en début et fin
+            $uniteMesure = $row['uniteMesure'];
+            $valeurSaisie = $row['valeurSaisie'];
+			$abreviation = $row['Abreviation'];
+
+            // Debug: Afficher les valeurs actuelles
+            error_log("TagName: $tagName, UniteMesure: $uniteMesure, ValeurSaisie: $valeurSaisie" . PHP_EOL, 3, ROOT_PATH . '/error.log');
+
+            foreach ($tagsToCheck as $tag) {
+                if (strpos($abreviation, $tag) !== false) {
+                   // $tag = $tagName; // Affecter $tag à $tagName pour utiliser le nom de tag original
+                    // Convertir en grammes en fonction de l'unité de mesure
+                    switch ($uniteMesure) {
+                        case 'kg':
+                            $valeurSaisie *= 1000;
+                            break;
+                        case 'dg':
+                            $valeurSaisie *= 0.1;
+                            break;
+                        case 'cg':
+                            $valeurSaisie *= 0.01;
+                            break;
+                        case 'mg':
+                            $valeurSaisie *= 0.001;
+                            break;
+                        case '%':
+                                $valeurSaisie *= 100;
+                            
+                            break;
+                    }
+
+                    // Remplacer le point par une virgule dans la valeur saisie
+                    $valeurSaisie = str_replace('.', ',', $valeurSaisie);
+                    // Stocker la valeur dans le tableau
+                    $tagValues[$tag] = $valeurSaisie;
+
+                }
+				$tagNames[$tag] = $tagName.$tag; // Stocker le nom complet du tag
+				error_log("TagName:$tagNames[$tag], UniteMesure: $uniteMesure, ValeurSaisie: $valeurSaisie" . PHP_EOL, 3, ROOT_PATH . '/error.log');
+
+            }
+        }
+
+        // Calculer Poids_Chocolat_g si nécessaire
+        if ($tagValues['Poids_Chocolat_g'] == '0') {
+            $poidsTotal = str_replace(',', '.', $tagValues['Poids_Total_g']);
+            $poidsFourrage1 = str_replace(',', '.', $tagValues['Poids_Fourrage1_g']);
+            $poidsFourrage2 = str_replace(',', '.', $tagValues['Poids_Fourrage2_g']);
+            $poidsInclusions1 = str_replace(',', '.', $tagValues['Poids_Inclusions1_g']);
+            $poidsInclusions2 = str_replace(',', '.', $tagValues['Poids_Inclusions2_g']);
+            $poidsBiscuit = str_replace(',', '.', $tagValues['Poids_Biscuit_Seul_g']);
+
+            $poidsChocolat = $poidsTotal - $poidsFourrage1 - $poidsFourrage2 - $poidsInclusions1 - $poidsInclusions2 - $poidsBiscuit;
+            $tagValues['Poids_Chocolat_g'] = str_replace('.', ',', $poidsChocolat);
+        }
+
+        // Générer le contenu du CSV en utilisant les noms complets des tags
+        foreach ($tagsToCheck as $tag) {
+			error_log($tagNames[$tag]. PHP_EOL, 3, ROOT_PATH . '/error.log');
+            $tagName =$tagNames[$tag]; 
+            $csv_content .= $tagName . ';' . $tagValues[$tag] . ";OK \n";
+        }
+		try{
+	     $file_handler  = streamRemoteFile($remote_server,$port,$ssh_user,$ssh_password,$remote_csv_file,"w");
 	
 	   // Vérification de la ressource de fichier
 	   if (!is_resource($file_handler)) {
@@ -277,14 +351,16 @@
 		$donnee['etatConsigne'] = "enAttente";
 		envoiMessage($_SESSION['id_user'],$donnee,'NULL');
 		error_log($donnee['corpMsg']. PHP_EOL, 3, ROOT_PATH . '/error.log');
-        return false;
+		throw new Exception("Impossible d'établir une connexion SFTP ou d'ouvrir le fichier distant ".$remote_csv_file."\n");
+        //return true;
 	   } else {
 		   // Écrire le contenu du fichier CSV sur le serveur distant
 		   if (fwrite($file_handler, $csv_content) === false) {
 			$donnee['corpMsg'] = "Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file."\n";
 			envoiMessage($_SESSION['id_user'],$donnee,'NULL');
 			error_log($donnee['corpMsg'] . PHP_EOL, 3, ROOT_PATH . '/error.log');
-			return false;
+			throw new Exception("Impossible d'écrire le contenu dans le fichier distant sur".$remote_csv_file."\n");
+			//return true;
 		   } else {
 			$donnee['corpMsg'] = "Fichier CSV enregistré avec succès sur le serveur SFTP sur ".$remote_csv_file."\n";
 			//envoiMessage($_SESSION['id_user'],$donnee,'NULL');
@@ -294,6 +370,19 @@
 		   fclose($file_handler);
 		   return true;
 	   }
+	} catch (Exception $e) {
+		// Attraper et afficher les exceptions
+		$message = $e->getMessage();
+		error_log($message, 3, ROOT_PATH . '/error.log');
+		return false;
+	}
+	}catch (Exception $e) {
+		// Attraper et afficher les exceptions
+		$message = $e->getMessage();
+		error_log($message, 3, ROOT_PATH . '/error.log');
+		// Retourner false pour indiquer un échec
+		return false;
+	}
 	}
 
 	function envoiMessage($id_user,$donnee,$id_reponseMsg = 'NULL'){
